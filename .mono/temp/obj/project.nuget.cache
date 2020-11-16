@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "PFP23Mduf3SXGsr89C0D00DCxbyOwQbNJZI4wUsWkVpLWCCu4ML1DcCW6e21Rz1bGccRnj3kLA6J7DZTXDCJIQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\martin\\Documents\\RogueLikeProject\\RogueLikeProject.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\martin\\.nuget\\packages\\gorogue\\2.6.4\\gorogue.2.6.4.nupkg.sha512",
+    "C:\\Users\\martin\\.nuget\\packages\\optimizedpriorityqueue\\4.2.0\\optimizedpriorityqueue.4.2.0.nupkg.sha512",
+    "C:\\Users\\martin\\.nuget\\packages\\troschuetz.random\\4.4.0\\troschuetz.random.4.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}

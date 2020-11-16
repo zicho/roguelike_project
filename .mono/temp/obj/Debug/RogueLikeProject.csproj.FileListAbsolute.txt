@@ -1,0 +1,12 @@
+C:\Users\martin\Documents\RogueLikeProject\.mono\temp\bin\Debug\RogueLikeProject.dll
+C:\Users\martin\Documents\RogueLikeProject\.mono\temp\bin\Debug\RogueLikeProject.pdb
+C:\Users\martin\Documents\RogueLikeProject\.mono\temp\bin\Debug\GoRogue.dll
+C:\Users\martin\Documents\RogueLikeProject\.mono\temp\bin\Debug\Priority Queue.dll
+C:\Users\martin\Documents\RogueLikeProject\.mono\temp\bin\Debug\Troschuetz.Random.dll
+C:\Users\martin\Documents\RogueLikeProject\.mono\temp\obj\Debug\RogueLikeProject.csprojAssemblyReference.cache
+C:\Users\martin\Documents\RogueLikeProject\.mono\temp\obj\Debug\RogueLikeProject.AssemblyInfoInputs.cache
+C:\Users\martin\Documents\RogueLikeProject\.mono\temp\obj\Debug\RogueLikeProject.AssemblyInfo.cs
+C:\Users\martin\Documents\RogueLikeProject\.mono\temp\obj\Debug\RogueLikeProject.csproj.CoreCompileInputs.cache
+C:\Users\martin\Documents\RogueLikeProject\.mono\temp\obj\Debug\RogueLikeProject.csproj.CopyComplete
+C:\Users\martin\Documents\RogueLikeProject\.mono\temp\obj\Debug\RogueLikeProject.dll
+C:\Users\martin\Documents\RogueLikeProject\.mono\temp\obj\Debug\RogueLikeProject.pdb

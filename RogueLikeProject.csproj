@@ -1,0 +1,11 @@
+<Project Sdk="Godot.NET.Sdk/3.2.3">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+  </PropertyGroup>
+    <ItemGroup>
+    <PackageReference Include="GoRogue">
+      <Version>2.6.4</Version>
+    </PackageReference>
+    <Reference Include="System" />
+  </ItemGroup>
+</Project>

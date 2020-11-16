@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Map.cs" type="Script" id=1]
+[ext_resource path="res://tiles/Tiles.tres" type="TileSet" id=2]
+[ext_resource path="res://tiles/Fog.tres" type="TileSet" id=3]
+
+[node name="Node" type="Node"]
+
+[node name="FogMap" type="TileMap" parent="."]
+visible = false
+z_index = 1
+tile_set = ExtResource( 3 )
+format = 1
+
+[node name="Map" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+format = 1
+script = ExtResource( 1 )

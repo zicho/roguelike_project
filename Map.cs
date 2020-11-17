@@ -41,12 +41,12 @@ namespace MainGame {
 
             var randomEmpty = MapHelper.RandomEmpty.ToCoord();
 
-            var p = new Player
-            {
-                MapPosition = randomEmpty
-            };
+            var p = new Player();
+            // {
+            //     MapPosition = randomEmpty
+            // };
 
-            MapHelper.CurrentMap.AddEntity(p);
+            MapHelper.AddEntity(p);
             GD.Print("Number of entities: " + MapHelper.CurrentMap.Entities.Count);
 
             foreach(var ent in MapHelper.CurrentMap.Entities) {

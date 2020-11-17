@@ -19,12 +19,12 @@ public class Player : Node2D, IGameObject {
 
     public Map CurrentMap { get; set; }
 
-    // private Coord _position;
+
+    private Coord _position;
     Coord IGameObject.Position {
         get => _position;
         set {
             _position = value;
-            // _backingField.Position = value;
         }
     }
 
@@ -32,7 +32,7 @@ public class Player : Node2D, IGameObject {
         get => _position;
         set {
             Position = MapHelper.TileMap.MapToWorld(value.ToVector2());
-            IGameObject.Position = value;
+            _position = value;
         }
     }
 

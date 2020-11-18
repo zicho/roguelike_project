@@ -28,6 +28,7 @@ namespace Actors {
         public Vector2 MapPosition {
             get => MapHelper.GetMapPosition(Position);
             set {
+                Moved?.Invoke(this, new ItemMovedEventArgs<IGameObject>(this, _backingField.Position, value.ToCoord()));
                 Position = MapHelper.SetMapPosition(value);
                 _backingField.Position = value.ToCoord();
             }
@@ -117,6 +118,13 @@ namespace Actors {
 
         public void RemoveComponents(params object[] components) {
             throw new NotImplementedException();
+        }
+
+        public override void _Ready()
+        {
+            AddToGroup("Actors");
+            MapPosition = _backingField.Position.ToVector2();
+            GD.Print($"Entity {Name} was placed at {MapPosition}");
         }
     }
 }

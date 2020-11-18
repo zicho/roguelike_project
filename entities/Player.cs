@@ -1,15 +1,16 @@
+using System;
 using Extensions;
 using Godot;
 using GoRogue;
+using GoRogue.GameFramework;
+using Helpers;
 
 namespace Actors
 {
     public class Player : Actor
     {
-        public override void _Ready()
-        {
-            MapPosition = _backingField.Position.ToVector2();
-        }
+        [Signal]
+        public delegate void PlayerActed();
 
         public override void _Process(float delta)
         {
@@ -21,6 +22,23 @@ namespace Actors
             if (Input.IsActionJustPressed("SW")) MoveIn(Direction.DOWN_LEFT);
             if (Input.IsActionJustPressed("W")) MoveIn(Direction.LEFT);
             if (Input.IsActionJustPressed("NW")) MoveIn(Direction.UP_LEFT);
+        }
+
+        public Player() : base()
+        {
+            Moved += OnPlayerActed;
+            AddToGroup("Enemies");
+        }
+
+        private void OnPlayerActed(object sender, ItemMovedEventArgs<IGameObject> e)
+        {
+            foreach(var node in GetTree().GetNodesInGroup("Enemies")) {
+                if(node is Enemy enemy) {
+                    enemy.MoveRandom();
+                }
+            }
+
+            // en.MoveRandom();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Actors;
 using Extensions;
 using Godot;
+using GoRogue;
 using GoRogue.GameFramework;
 
 namespace Helpers {
@@ -14,11 +15,13 @@ namespace Helpers {
         public static List<Vector2> KnownTiles { get; set; } = new List<Vector2>();
         public static List<Vector2> FogTiles { get; set; } = new List<Vector2>();
 
+        public static List<Vector2> EntityPositions { get; set; } = new List<Vector2>();
+
         public static Vector2 RandomEmpty => EmptyTiles[new Random().Next(EmptyTiles.Count)];
 
         public static void AddEntity(PackedScene scene) {
             try {
-                var entity = scene.Instance() as Player;
+                var entity = scene.Instance() as Actor;
                 // entity.RenderSpawnData();
                 // TileMap.AddChild(entity);
                 

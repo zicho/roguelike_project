@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Extensions;
 using Godot;
 using GoRogue;
@@ -40,6 +41,12 @@ namespace MainGame {
             }
 
             MapHelper.AddEntity(ResourceLoader.Load<PackedScene>("res://entities/Player.tscn"));
+
+            foreach (var e in Enumerable.Range(0, 10)) {
+                MapHelper.AddEntity(ResourceLoader.Load<PackedScene>("res://entities/Enemy.tscn"));
+            }
+
+            
             GD.Print("Number of entities: " + MapHelper.CurrentMap.Entities.Count);
 
             foreach(var ent in MapHelper.CurrentMap.Entities) {

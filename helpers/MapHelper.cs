@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Actors;
 using Extensions;
 using Godot;
 using GoRogue.GameFramework;
@@ -15,10 +16,19 @@ namespace Helpers {
 
         public static Vector2 RandomEmpty => EmptyTiles[new Random().Next(EmptyTiles.Count)];
 
-        public static void AddEntity(Player entity) {
-            entity.MapPosition = RandomEmpty.ToCoord();
-            TileMap.AddChild(entity);
-            CurrentMap.AddEntity(entity);
+        public static void AddEntity(PackedScene scene) {
+            try {
+                var entity = scene.Instance() as Player;
+                // entity.RenderSpawnData();
+                // TileMap.AddChild(entity);
+                
+            } catch {
+
+            }
+
         }
+
+        public static Vector2 SetMapPosition(Vector2 pos) => TileMap.MapToWorld(pos);
+        public static Vector2 GetMapPosition(Vector2 pos) => TileMap.WorldToMap(pos);
     }
 }

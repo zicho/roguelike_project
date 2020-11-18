@@ -39,22 +39,14 @@ namespace MainGame {
                 }
             }
 
-            var randomEmpty = MapHelper.RandomEmpty.ToCoord();
-
-            var p = new Player();
-            // {
-            //     MapPosition = randomEmpty
-            // };
-
-            MapHelper.AddEntity(p);
+            MapHelper.AddEntity(ResourceLoader.Load<PackedScene>("res://entities/Player.tscn"));
             GD.Print("Number of entities: " + MapHelper.CurrentMap.Entities.Count);
 
             foreach(var ent in MapHelper.CurrentMap.Entities) {
                 GD.Print(ent.Item.ID);
             }
 
-            GD.Print(WorldToMap(p.Position));
-            GD.Print(p.MapPosition);
+            GD.Print("Number of children: " + GetChildCount());
         }
 
         private static class TerrainFactory {

@@ -7,3 +7,9 @@
 [node name="Fog" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 centered = false
+
+[node name="LightFog" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.607843 )
+position = Vector2( 65, 0 )
+texture = ExtResource( 1 )
+centered = false

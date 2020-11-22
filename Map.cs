@@ -50,7 +50,7 @@ namespace MainGame {
             GD.Print("Number of entities: " + MapHelper.CurrentMap.Entities.Count);
 
             foreach(var ent in MapHelper.CurrentMap.Entities) {
-                GD.Print(ent.Item.ID);
+                // GD.Print(ent.Item.ID);
             }
 
             GD.Print("Number of children: " + GetChildCount());

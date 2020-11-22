@@ -19,6 +19,9 @@ namespace Helpers {
 
         public static Vector2 RandomEmpty => EmptyTiles[new Random().Next(EmptyTiles.Count)];
 
+        
+        public static List<Coord>  PlayerFOV { get; set; } = new List<Coord>();
+
         public static void AddEntity(PackedScene scene) {
             try {
                 var entity = scene.Instance() as Actor;

@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Actors;
+using Extensions;
 using Godot;
 using GoRogue;
+using GoRogue.GameFramework;
+using GoRogue.MapViews;
+using Helpers;
 
 namespace Actors {
     public class Enemy : Actor {
@@ -23,6 +27,17 @@ namespace Actors {
         public override void _Ready() {
             base._Ready();
             AddToGroup("Enemies");
+            Moved += OnEnemyActed;
+        }
+
+        public override void _Process(float delta)
+        {
+            base._Process(delta);
+        }
+
+        private void OnEnemyActed(object sender, ItemMovedEventArgs<IGameObject> e)
+        {
+            
         }
 
         internal void MoveRandom()

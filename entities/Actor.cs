@@ -28,9 +28,9 @@ namespace Actors {
         public Vector2 MapPosition {
             get => MapHelper.GetMapPosition(Position);
             set {
-                Moved?.Invoke(this, new ItemMovedEventArgs<IGameObject>(this, _backingField.Position, value.ToCoord()));
                 Position = MapHelper.SetMapPosition(value);
                 _backingField.Position = value.ToCoord();
+                Moved?.Invoke(this, new ItemMovedEventArgs<IGameObject>(this, _backingField.Position, value.ToCoord()));
             }
         }
 
@@ -53,7 +53,7 @@ namespace Actors {
                 parentObject: this,
                 isStatic: false,
                 isWalkable: false,
-                isTransparent: false);
+                isTransparent: IsTransparent);
 
             _origPos = pos;
 
@@ -71,16 +71,13 @@ namespace Actors {
             // if (_backingField.Position == newPos || (CurrentMap?.Contains(newPos) == false))
             //     return false;
 
-            if (!MapHelper.EmptyTiles.Contains(newPos.ToVector2())) {
+            if(IsTransparent) GD.Print($"New Pos is: {newPos}, walkable: {CurrentMap.WalkabilityView[newPos]}");
+
+            if (!MapHelper.EmptyTiles.Contains(newPos.ToVector2()) || !CurrentMap.WalkabilityView[newPos]) {
                 return false;
             }
 
-
-
             MapPosition = newPos.ToVector2();
-
-
-
             return true;//_backingField.MoveIn(direction);
         }
 
@@ -124,7 +121,7 @@ namespace Actors {
         {
             AddToGroup("Actors");
             MapPosition = _backingField.Position.ToVector2();
-            GD.Print($"Entity {Name} was placed at {MapPosition}");
+            // GD.Print($"Entity {Name} was placed at {MapPosition}");
         }
     }
 }

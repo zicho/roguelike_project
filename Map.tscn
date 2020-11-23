@@ -7,12 +7,12 @@
 [node name="Node" type="Node"]
 
 [node name="FogMap" type="TileMap" parent="."]
+visible = false
 z_index = 1
 tile_set = ExtResource( 3 )
 format = 1
 
 [node name="Map" type="TileMap" parent="."]
-position = Vector2( -1, 0 )
 tile_set = ExtResource( 2 )
 format = 1
 script = ExtResource( 1 )

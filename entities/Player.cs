@@ -8,12 +8,8 @@ using Helpers;
 
 namespace Actors {
     public class Player : Actor {
-        [Signal]
-        public delegate void PlayerActed();
-
         public override void _Ready() {
             base._Ready();
-            CalculateFOV();
             GD.Print($"Player pos: {MapPosition}");
         }
 
@@ -34,21 +30,13 @@ namespace Actors {
                     }
                 }
             }
-
-        }
-
-        public Player() : base() {
-            IsTransparent = true;
-            IsWalkable = true;
-            Moved += OnPlayerActed;
-            // AddToGroup("Enemies");
         }
 
         private void OnPlayerActed(object sender, ItemMovedEventArgs<IGameObject> e) {
             GD.Print("player acted");
             foreach (var node in GetTree().GetNodesInGroup("Enemies")) {
                 if (node is Enemy enemy) {
-                    enemy.MoveRandom();
+                    // enemy.MoveRandom();
                 }
             }
 

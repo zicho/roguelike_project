@@ -126,25 +126,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\martin\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\mastrom\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\martin\\Documents\\RogueLikeProject\\RogueLikeProject.csproj",
+      "projectUniqueName": "C:\\projects\\roguelike\\roguelike_project\\RogueLikeProject.csproj",
       "projectName": "RogueLikeProject",
-      "projectPath": "C:\\Users\\martin\\Documents\\RogueLikeProject\\RogueLikeProject.csproj",
-      "packagesPath": "C:\\Users\\martin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\martin\\Documents\\RogueLikeProject\\.mono\\temp\\obj\\",
+      "projectPath": "C:\\projects\\roguelike\\roguelike_project\\RogueLikeProject.csproj",
+      "packagesPath": "C:\\Users\\mastrom\\.nuget\\packages\\",
+      "outputPath": "C:\\projects\\roguelike\\roguelike_project\\.mono\\temp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\martin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\mastrom\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -174,7 +172,7 @@
             "version": "[2.6.4, )"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
       }
     }
   }

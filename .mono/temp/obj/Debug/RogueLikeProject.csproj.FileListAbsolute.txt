@@ -10,3 +10,15 @@ C:\Users\martin\Documents\RogueLikeProject\.mono\temp\obj\Debug\RogueLikeProject
 C:\Users\martin\Documents\RogueLikeProject\.mono\temp\obj\Debug\RogueLikeProject.csproj.CopyComplete
 C:\Users\martin\Documents\RogueLikeProject\.mono\temp\obj\Debug\RogueLikeProject.dll
 C:\Users\martin\Documents\RogueLikeProject\.mono\temp\obj\Debug\RogueLikeProject.pdb
+C:\projects\roguelike\roguelike_project\.mono\temp\bin\Debug\RogueLikeProject.dll
+C:\projects\roguelike\roguelike_project\.mono\temp\bin\Debug\RogueLikeProject.pdb
+C:\projects\roguelike\roguelike_project\.mono\temp\bin\Debug\GoRogue.dll
+C:\projects\roguelike\roguelike_project\.mono\temp\bin\Debug\Priority Queue.dll
+C:\projects\roguelike\roguelike_project\.mono\temp\bin\Debug\Troschuetz.Random.dll
+C:\projects\roguelike\roguelike_project\.mono\temp\obj\Debug\RogueLikeProject.csprojAssemblyReference.cache
+C:\projects\roguelike\roguelike_project\.mono\temp\obj\Debug\RogueLikeProject.AssemblyInfoInputs.cache
+C:\projects\roguelike\roguelike_project\.mono\temp\obj\Debug\RogueLikeProject.AssemblyInfo.cs
+C:\projects\roguelike\roguelike_project\.mono\temp\obj\Debug\RogueLikeProject.csproj.CoreCompileInputs.cache
+C:\projects\roguelike\roguelike_project\.mono\temp\obj\Debug\RogueLikeProject.csproj.CopyComplete
+C:\projects\roguelike\roguelike_project\.mono\temp\obj\Debug\RogueLikeProject.dll
+C:\projects\roguelike\roguelike_project\.mono\temp\obj\Debug\RogueLikeProject.pdb

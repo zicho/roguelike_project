@@ -12,14 +12,12 @@ namespace Actors
     public class Actor : Node2D, IGameObject
     {
         public IGameObject _backingField;
-        private static readonly IDGenerator generator = new IDGenerator();
-
         public bool IsStatic => _backingField.IsStatic;
 
         public bool IsTransparent { get => _backingField.IsTransparent; set => _backingField.IsTransparent = value; }
         public bool IsWalkable { get => _backingField.IsWalkable; set => _backingField.IsWalkable = value; }
 
-        public uint ID => generator.UseID();
+        public uint ID => _backingField.ID;
 
         public int Layer => 1;
 
@@ -43,6 +41,8 @@ namespace Actors
         }
 
         public Map CurrentMap => _backingField.CurrentMap;
+
+        public event EventHandler Acted;
 
         public event EventHandler<ItemMovedEventArgs<IGameObject>> Moved
         {
@@ -71,7 +71,13 @@ namespace Actors
 
         public void OnMapChanged(Map newMap) => _backingField.OnMapChanged(newMap);
 
-        public bool MoveIn(Direction direction) => _backingField.MoveIn(direction);
+        public bool MoveIn(Direction direction) {
+            Coord newPos = _backingField.Position + direction;
+            var s = _backingField.MoveIn(direction);
+            if (s) MapPosition = newPos.ToVector2();
+            Acted?.Invoke(this, null);
+            return s;
+        }
 
         public void AddComponent(object component)
         {

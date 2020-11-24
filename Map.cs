@@ -50,10 +50,10 @@ namespace MainGame
             MapHelper.TileMap.AddChild(player);
 
             var enemyScene = GD.Load<PackedScene>("res://entities/Enemy.tscn");
-            var enemy = enemyScene.Instance() as Enemy;
 
             foreach (var e in Enumerable.Range(0, 10))
             {
+                var enemy = enemyScene.Instance() as Enemy;
                 map.AddEntity(enemy);
                 MapHelper.TileMap.AddChild(enemy);
             }

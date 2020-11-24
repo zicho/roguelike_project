@@ -11,6 +11,8 @@ namespace Actors {
         public override void _Ready() {
             base._Ready();
             GD.Print($"Player pos: {MapPosition}");
+            Acted += OnPlayerActed;
+            CalculateFOV();
         }
 
         public override void _Process(float delta) {
@@ -22,6 +24,7 @@ namespace Actors {
             if (Input.IsActionJustPressed("SW")) MoveIn(Direction.DOWN_LEFT);
             if (Input.IsActionJustPressed("W")) MoveIn(Direction.LEFT);
             if (Input.IsActionJustPressed("NW")) MoveIn(Direction.UP_LEFT);
+            if (Input.IsActionJustPressed("W")) MoveIn(Direction.NONE);
 
             if (Input.IsActionJustPressed("ui_accept")) {
                 foreach (var node in GetTree().GetNodesInGroup("Enemies")) {
@@ -32,11 +35,11 @@ namespace Actors {
             }
         }
 
-        private void OnPlayerActed(object sender, ItemMovedEventArgs<IGameObject> e) {
+        private void OnPlayerActed(object sender, EventArgs e) {
             GD.Print("player acted");
             foreach (var node in GetTree().GetNodesInGroup("Enemies")) {
                 if (node is Enemy enemy) {
-                    // enemy.MoveRandom();
+                    enemy.MoveRandom();
                 }
             }
 
@@ -45,6 +48,8 @@ namespace Actors {
         }
 
         private void CalculateFOV() {
+            if (CurrentMap == null || MapHelper.FogMap == null) return; // failsafe, should not occur
+
             foreach (var cell in CurrentMap.FOV.CurrentFOV) {
                 MapHelper.FogMap.SetCell(cell.X, cell.Y, 1);
             }

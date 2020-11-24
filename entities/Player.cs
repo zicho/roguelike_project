@@ -24,7 +24,7 @@ namespace Actors {
             if (Input.IsActionJustPressed("SW")) MoveIn(Direction.DOWN_LEFT);
             if (Input.IsActionJustPressed("W")) MoveIn(Direction.LEFT);
             if (Input.IsActionJustPressed("NW")) MoveIn(Direction.UP_LEFT);
-            if (Input.IsActionJustPressed("W")) MoveIn(Direction.NONE);
+            if (Input.IsActionJustPressed("WAIT")) MoveIn(Direction.NONE);
 
             if (Input.IsActionJustPressed("ui_accept")) {
                 foreach (var node in GetTree().GetNodesInGroup("Enemies")) {

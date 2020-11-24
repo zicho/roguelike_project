@@ -13,6 +13,7 @@ namespace MainGame
     {
         public override void _Ready()
         {
+
             var terrain = new ArrayMap<bool>(40, 40);
 
             MapHelper.TileMap = this;

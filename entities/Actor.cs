@@ -67,14 +67,20 @@ namespace Actors
         {
             AddToGroup("Actors");
             MapPosition = _backingField.Position.ToVector2(); // used to set the position on the graphical map, should always "mirror" the backing field position
+            // GameHelper.ShowMessage($"{Name} is spawned");
         }
 
         public void OnMapChanged(Map newMap) => _backingField.OnMapChanged(newMap);
 
         public bool MoveIn(Direction direction) {
             Coord newPos = _backingField.Position + direction;
+
+            var ent = CurrentMap.GetEntity<Actor>(newPos);
+            if(ent != null) GameHelper.ShowMessage(Name + " bumped into " + ent.Name);
+
             var s = _backingField.MoveIn(direction);
             if (s) MapPosition = newPos.ToVector2();
+
             Acted?.Invoke(this, null);
             return s;
         }

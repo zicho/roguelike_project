@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Map.tscn" type="PackedScene" id=1]
+
+[node name="Main" type="Node"]
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+margin_right = 800.0
+margin_bottom = 600.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 800, 600 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="Map" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
+
+[node name="Label" type="Label" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 792.579
+margin_top = 32.9797
+margin_right = 927.579
+margin_bottom = 320.98
+text = "W: Toggle Walkmap
+F: Toggle Fogmap
+D: Disable Enemy movement"
+__meta__ = {
+"_edit_use_anchors_": false
+}

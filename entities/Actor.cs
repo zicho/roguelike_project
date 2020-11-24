@@ -12,14 +12,13 @@ namespace Actors
     public class Actor : Node2D, IGameObject
     {
         public IGameObject _backingField;
-        private static readonly IDGenerator generator = new IDGenerator();
-
+        public Actor Target { get; set; }
         public bool IsStatic => _backingField.IsStatic;
 
         public bool IsTransparent { get => _backingField.IsTransparent; set => _backingField.IsTransparent = value; }
         public bool IsWalkable { get => _backingField.IsWalkable; set => _backingField.IsWalkable = value; }
 
-        public uint ID => generator.UseID();
+        public uint ID => _backingField.ID;
 
         public int Layer => 1;
 
@@ -28,6 +27,7 @@ namespace Actors
             get => MapHelper.GetMapPosition(Position);
             set
             {
+                _backingField.Position = value.ToCoord();
                 Position = MapHelper.SetMapPosition(value);
             }
         }
@@ -50,6 +50,8 @@ namespace Actors
             remove => _backingField.Moved -= value;
         }
 
+        public event EventHandler Acted;
+
         public Actor()
         {
             var pos = MapHelper.RandomEmpty.ToCoord();
@@ -61,6 +63,8 @@ namespace Actors
                 isStatic: false,
                 isWalkable: false,
                 isTransparent: false);
+
+            // MapHelper.TileMap.AddChild(this);
         }
 
         public override void _Ready()
@@ -71,7 +75,29 @@ namespace Actors
 
         public void OnMapChanged(Map newMap) => _backingField.OnMapChanged(newMap);
 
-        public bool MoveIn(Direction direction) => _backingField.MoveIn(direction);
+        public bool MoveIn(Direction direction)
+        {
+            Coord newPos = _backingField.Position + direction;
+            var s = _backingField.MoveIn(direction);
+            if (s) MapPosition = newPos.ToVector2();
+            Acted?.Invoke(this, null);
+
+            foreach (var pos in CurrentMap.Positions())
+            {
+                if (CurrentMap.WalkabilityView[pos])
+                {
+                    MapHelper.WalkMap.SetCell(pos.X, pos.Y, 0);
+                }
+                else
+                {
+                    MapHelper.WalkMap.SetCell(pos.X, pos.Y, 1);
+                }
+            }
+
+            if (MapPosition.ToCoord() != _backingField.Position) GD.Print("There is a pos mismatch");
+
+            return s;
+        }
 
         public void AddComponent(object component)
         {

@@ -13,12 +13,15 @@ namespace MainGame
     {
         public override void _Ready()
         {
-            var terrain = new ArrayMap<bool>(40, 40);
+            var terrain = new ArrayMap<bool>(200, 200);
 
             MapHelper.TileMap = this;
             MapHelper.FogMap = GetParent().GetNode<TileMap>("FogMap");
+            MapHelper.WalkMap = GetParent().GetNode<TileMap>("WalkMap");
+            
 
             QuickGenerators.GenerateCellularAutomataMap(terrain);
+            //QuickGenerators.GenerateRectangleMap(terrain);
 
             var map = new GoRogue.GameFramework.Map(
                 width: terrain.Width,
@@ -33,11 +36,13 @@ namespace MainGame
                 if (terrain[pos])
                 {
                     SetCell(pos.X, pos.Y, 0);
+                    MapHelper.WalkMap.SetCell(pos.X, pos.Y, 0);
                     map.SetTerrain(TerrainFactory.Floor(pos));
                     MapHelper.EmptyTiles.Add(new Vector2(pos.X, pos.Y));
                 }
                 else // Wall
                 {
+                    MapHelper.WalkMap.SetCell(pos.X, pos.Y, 1);
                     map.SetTerrain(TerrainFactory.Wall(pos));
                     SetCell(pos.X, pos.Y, 1);
                 }
@@ -49,14 +54,18 @@ namespace MainGame
             map.AddEntity(player);
             MapHelper.TileMap.AddChild(player);
 
-            var enemyScene = GD.Load<PackedScene>("res://entities/Enemy.tscn");
-            var enemy = enemyScene.Instance() as Enemy;
+            const int enemyCount = 6;
 
-            foreach (var e in Enumerable.Range(0, 10))
+            foreach (var enemy in from e in Enumerable.Range(0, enemyCount)
+                                  let enemyScene = GD.Load<PackedScene>("res://entities/Enemy.tscn")
+                                  let enemy = enemyScene.Instance() as Enemy
+                                  select enemy)
             {
                 map.AddEntity(enemy);
                 MapHelper.TileMap.AddChild(enemy);
             }
+
+            MapHelper.AStar = new GoRogue.Pathing.AStar(map.WalkabilityView, Distance.CHEBYSHEV);
 
             MapHelper.CurrentMap = map;
 

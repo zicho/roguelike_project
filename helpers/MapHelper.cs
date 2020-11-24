@@ -5,6 +5,7 @@ using Extensions;
 using Godot;
 using GoRogue;
 using GoRogue.GameFramework;
+using GoRogue.MapViews;
 
 namespace Helpers {
     public static class MapHelper {
@@ -21,6 +22,8 @@ namespace Helpers {
 
         
         public static List<Coord>  PlayerFOV { get; set; } = new List<Coord>();
+        public static GoRogue.Pathing.AStar AStar { get; set; }
+        public static TileMap WalkMap { get; internal set; }
 
         public static void AddEntity(PackedScene scene) {
             try {

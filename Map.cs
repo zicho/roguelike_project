@@ -14,10 +14,11 @@ namespace MainGame
         public override void _Ready()
         {
 
-            var terrain = new ArrayMap<bool>(10, 10);
+            var terrain = new ArrayMap<bool>(20, 20);
 
             MapHelper.TileMap = this;
             MapHelper.FogMap = GetParent().GetNode<TileMap>("FogMap");
+            MapHelper.SightMap = GetParent().GetNode<TileMap>("SightMap");
 
             QuickGenerators.GenerateRectangleMap(terrain);
 
@@ -52,7 +53,7 @@ namespace MainGame
 
             var enemyScene = GD.Load<PackedScene>("res://entities/Enemy.tscn");
 
-            foreach (var e in Enumerable.Range(0, 5))
+            foreach (var e in Enumerable.Range(0, 2))
             {
                 var enemy = enemyScene.Instance() as Enemy;
                 map.AddEntity(enemy);

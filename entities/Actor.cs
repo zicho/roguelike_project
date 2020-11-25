@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Extensions;
 using Godot;
 using GoRogue;
@@ -48,11 +49,14 @@ namespace Actors
 
         public void Attack(Actor target)
         {
+            GameHelper.ShowMessage($"{this.Name} attacks {target.Name}");
             target.Health -= Strength;
             if (target.Health <= 0)
             {
                 CurrentMap.RemoveEntity(target);
                 target.QueueFree();
+                GameHelper.ShowMessage($"{this.Name} KILLS {target.Name}! WOW!");
+                GD.Print($"{this.Name} KILLS {target.Name}! WOW!");
             }
         }
 
@@ -84,6 +88,11 @@ namespace Actors
 
         public void OnMapChanged(Map newMap) => _backingField.OnMapChanged(newMap);
 
+        public virtual void CalculateFOV() {
+            if (CurrentMap == null || MapHelper.FogMap == null) return; // failsafe, should not occur
+            CurrentMap.CalculateFOV(MapPosition.ToCoord(), 3);
+        }
+
         public bool MoveIn(Direction direction)
         {
             try
@@ -91,7 +100,7 @@ namespace Actors
                 Coord newPos = _backingField.Position + direction;
 
                 var ent = CurrentMap.GetEntity<Actor>(newPos);
-                if (ent != null)
+                if (ent != null && ent != this)
                 {
                     Attack(ent);
                     Acted?.Invoke(this, null);

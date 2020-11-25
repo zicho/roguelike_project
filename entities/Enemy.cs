@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Actors;
 using Extensions;
 using Godot;
@@ -9,8 +10,10 @@ using GoRogue.MapViews;
 using GoRogue.Pathing;
 using Helpers;
 
-namespace Actors {
-    public class Enemy : Actor {
+namespace Actors
+{
+    public class Enemy : Actor
+    {
 
         private readonly Random r = new Random();
         private readonly List<Direction> directions = new List<Direction>() {
@@ -28,41 +31,50 @@ namespace Actors {
 
         public GoalMap GoalMap { get; private set; }
 
-        public override void _Ready() {
+        public override void _Ready()
+        {
             base._Ready();
             AddToGroup("Enemies");
             Moved += OnEnemyActed;
 
-            UpdateGoalMap();
+            // UpdateGoalMap();
 
-            GD.Print(GoalMap.GetDirectionOfMinValue(_backingField.Position));
+            // GD.Print(GoalMap.GetDirectionOfMinValue(_backingField.Position));
         }
 
         private void UpdateGoalMap()
         {
-            var baseMap = new ArrayMap<GoalState>(CurrentMap.Width, CurrentMap.Height);
-
-            foreach (var pos in CurrentMap.Positions())
-            {
-                if (CurrentMap.WalkabilityView[pos])
-                {
-                    baseMap[pos] = GoalState.Clear;
-                }
-            }
-
-            baseMap[EntityHelper.PlayerPosition.ToCoord()] = GoalState.Goal;
-
+            var baseMap = new LambdaMapView<GoalState>(CurrentMap.Width, CurrentMap.Height, PlayerGoalMapFunc);
             GoalMap = new GoalMap(baseMap, Distance.CHEBYSHEV);
         }
 
-        public override void _Process(float delta)
+        private void OnEnemyActed(object sender, ItemMovedEventArgs<IGameObject> e) { }
+
+        private GoalState PlayerGoalMapFunc(Coord position)
         {
-            base._Process(delta);
+            if (position == EntityHelper.PlayerPosition.ToCoord()) return GoalState.Goal;
+            return CurrentMap.WalkabilityView[position] ? GoalState.Clear : GoalState.Obstacle;
         }
 
-        private void OnEnemyActed(object sender, ItemMovedEventArgs<IGameObject> e)
+        internal void Move()
         {
-            
+            CalculateFOV();
+
+            if(CurrentMap.FOV.CurrentFOV.Contains(EntityHelper.PlayerPosition.ToCoord())) {
+                GD.Print("Player sighted!");
+                MoveToTarget();
+            } else {
+                MoveRandom();
+            }
+        }
+
+        public override void CalculateFOV() {
+            base.CalculateFOV();
+
+            foreach (var cell in CurrentMap.FOV.CurrentFOV)
+            {
+                MapHelper.SightMap.SetCell(cell.X, cell.Y, 0);
+            }
         }
 
         internal void MoveRandom()
@@ -72,14 +84,9 @@ namespace Actors {
 
         public void MoveToTarget()
         {
-            GD.Print(GoalMap.BaseMap[EntityHelper.PlayerPosition.ToCoord()]);
-
-            var dir = GoalMap.GetDirectionOfMinValue(_backingField.Position);
-
-            var newPos = _backingField.Position + dir;
-
-            if(CurrentMap.WalkabilityView[newPos]) MoveIn(dir);
             UpdateGoalMap();
+            var dir = GoalMap.GetDirectionOfMinValue(_backingField.Position);
+            MoveIn(dir);
 
             GD.Print("Player is on tile: " + GoalMap.BaseMap[EntityHelper.PlayerPosition.ToCoord()]);
         }

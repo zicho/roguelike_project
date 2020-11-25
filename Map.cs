@@ -14,12 +14,12 @@ namespace MainGame
         public override void _Ready()
         {
 
-            var terrain = new ArrayMap<bool>(40, 40);
+            var terrain = new ArrayMap<bool>(10, 10);
 
             MapHelper.TileMap = this;
             MapHelper.FogMap = GetParent().GetNode<TileMap>("FogMap");
 
-            QuickGenerators.GenerateCellularAutomataMap(terrain);
+            QuickGenerators.GenerateRectangleMap(terrain);
 
             var map = new GoRogue.GameFramework.Map(
                 width: terrain.Width,
@@ -52,7 +52,7 @@ namespace MainGame
 
             var enemyScene = GD.Load<PackedScene>("res://entities/Enemy.tscn");
 
-            foreach (var e in Enumerable.Range(0, 10))
+            foreach (var e in Enumerable.Range(0, 5))
             {
                 var enemy = enemyScene.Instance() as Enemy;
                 map.AddEntity(enemy);

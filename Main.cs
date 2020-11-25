@@ -12,7 +12,6 @@ public class Main : Node
     public override void _Ready()
     {
         GD.Print("ouf");
-        GameHelper.MessageLog = GetNode<RichTextLabel>("MessageLog");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.

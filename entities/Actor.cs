@@ -11,6 +11,8 @@ namespace Actors
 {
     public class Actor : Node2D, IGameObject
     {
+        public int Health { get; set; } = 20;
+        public int Strength { get; set; } = 2;
         public IGameObject _backingField;
         public bool IsStatic => _backingField.IsStatic;
 
@@ -44,6 +46,16 @@ namespace Actors
 
         public event EventHandler Acted;
 
+        public void Attack(Actor target)
+        {
+            target.Health -= Strength;
+            if (target.Health <= 0)
+            {
+                CurrentMap.RemoveEntity(target);
+                target.QueueFree();
+            }
+        }
+
         public event EventHandler<ItemMovedEventArgs<IGameObject>> Moved
         {
             add => _backingField.Moved += value;
@@ -60,7 +72,7 @@ namespace Actors
                 parentObject: this,
                 isStatic: false,
                 isWalkable: false,
-                isTransparent: false);
+                isTransparent: true);
         }
 
         public override void _Ready()
@@ -72,17 +84,33 @@ namespace Actors
 
         public void OnMapChanged(Map newMap) => _backingField.OnMapChanged(newMap);
 
-        public bool MoveIn(Direction direction) {
-            Coord newPos = _backingField.Position + direction;
+        public bool MoveIn(Direction direction)
+        {
+            try
+            {
+                Coord newPos = _backingField.Position + direction;
 
-            var ent = CurrentMap.GetEntity<Actor>(newPos);
-            if(ent != null) GameHelper.ShowMessage(Name + " bumped into " + ent.Name);
+                var ent = CurrentMap.GetEntity<Actor>(newPos);
+                if (ent != null)
+                {
+                    Attack(ent);
+                    Acted?.Invoke(this, null);
+                    return false;
+                }
+                else
+                {
+                    var s = _backingField.MoveIn(direction);
+                    if (s) MapPosition = newPos.ToVector2();
 
-            var s = _backingField.MoveIn(direction);
-            if (s) MapPosition = newPos.ToVector2();
-
-            Acted?.Invoke(this, null);
-            return s;
+                    Acted?.Invoke(this, null);
+                    return s;
+                }
+            }
+            catch
+            {
+                GD.Print("move failed for entity " + Name);
+                return false;
+            }
         }
 
         public void AddComponent(object component)

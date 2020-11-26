@@ -30,22 +30,24 @@ namespace Actors
         internal Direction RandomDirection => directions[r.Next(directions.Count)];
 
         public GoalMap GoalMap { get; private set; }
+        public FleeMap FleeMap { get; private set; }
 
         public override void _Ready()
         {
             base._Ready();
             AddToGroup("Enemies");
             Moved += OnEnemyActed;
-
-            // UpdateGoalMap();
-
-            // GD.Print(GoalMap.GetDirectionOfMinValue(_backingField.Position));
+            UpdateGoalMap();
         }
 
         private void UpdateGoalMap()
         {
             var baseMap = new LambdaMapView<GoalState>(CurrentMap.Width, CurrentMap.Height, PlayerGoalMapFunc);
             GoalMap = new GoalMap(baseMap, Distance.CHEBYSHEV);
+            FleeMap = new FleeMap(GoalMap);
+            GoalMap.UpdatePathsOnly();
+            // GD.Print(GoalMap.ToString());
+            // GD.Print(FleeMap.ToString());
         }
 
         private void OnEnemyActed(object sender, ItemMovedEventArgs<IGameObject> e) { }
@@ -53,6 +55,7 @@ namespace Actors
         private GoalState PlayerGoalMapFunc(Coord position)
         {
             if (position == EntityHelper.PlayerPosition.ToCoord()) return GoalState.Goal;
+            else if (position == _backingField.Position) return GoalState.Clear;
             return CurrentMap.WalkabilityView[position] ? GoalState.Clear : GoalState.Obstacle;
         }
 
@@ -60,15 +63,28 @@ namespace Actors
         {
             CalculateFOV();
 
-            if(CurrentMap.FOV.CurrentFOV.Contains(EntityHelper.PlayerPosition.ToCoord())) {
+            if (CurrentMap.FOV.CurrentFOV.Contains(EntityHelper.PlayerPosition.ToCoord()))
+            {
                 GD.Print("Player sighted!");
-                MoveToTarget();
-            } else {
+                //MoveToTarget();
+                FleeFromTarget();
+            }
+            else
+            {
                 MoveRandom();
             }
         }
 
-        public override void CalculateFOV() {
+        private void FleeFromTarget()
+        {
+            UpdateGoalMap();
+            var dir = FleeMap.GetDirectionOfMinValue(_backingField.Position);
+            GD.Print("Dir was " + dir + ", is now " + dir.Reverse());
+            MoveIn(dir);
+        }
+
+        public override void CalculateFOV()
+        {
             base.CalculateFOV();
 
             foreach (var cell in CurrentMap.FOV.CurrentFOV)

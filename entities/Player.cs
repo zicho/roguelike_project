@@ -34,19 +34,20 @@ namespace Actors
 
             if (Input.IsActionJustPressed("ui_accept"))
             {
-                foreach (var node in GetTree().GetNodesInGroup("Enemies"))
-                {
-                    if (node is Enemy enemy)
-                    {
-                        enemy.Move();
-                    }
-                }
+                GD.Print(CurrentMap.WalkabilityView[_backingField.Position]);
+                // foreach (var node in GetTree().GetNodesInGroup("Enemies"))
+                // {
+                //     if (node is Enemy enemy)
+                //     {
+                //         enemy.Move();
+                //     }
+                // }
             }
         }
 
         private void OnPlayerActed(object sender, EventArgs e)
         {
-            GD.Print("player acted");
+            // GD.Print("player acted");
             EntityHelper.PlayerPosition = MapPosition;
             MapHelper.SightMap.Clear();
             foreach (var node in GetTree().GetNodesInGroup("Enemies"))

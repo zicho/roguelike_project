@@ -20,7 +20,7 @@ namespace MainGame
             MapHelper.FogMap = GetParent().GetNode<TileMap>("FogMap");
             MapHelper.SightMap = GetParent().GetNode<TileMap>("SightMap");
 
-            QuickGenerators.GenerateRectangleMap(terrain);
+            QuickGenerators.GenerateCellularAutomataMap(terrain);
 
             var map = new GoRogue.GameFramework.Map(
                 width: terrain.Width,

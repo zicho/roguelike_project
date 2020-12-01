@@ -49,7 +49,7 @@ namespace Actors
         {
             // GD.Print("player acted");
             EntityHelper.PlayerPosition = MapPosition;
-            MapHelper.SightMap.Clear();
+            // MapHelper.SightMap.Clear();
             foreach (var node in GetTree().GetNodesInGroup("Enemies"))
             {
                 if (node is Enemy enemy)
@@ -60,7 +60,7 @@ namespace Actors
 
             CalculateFOV();
             UpdateEnemyVisibility();
-
+            PathHelper.UpdateGoalMap();
         }
 
         public override void CalculateFOV()
@@ -72,14 +72,13 @@ namespace Actors
                 MapHelper.FogMap.SetCell(cell.X, cell.Y, 1);
             }
 
-            CurrentMap.CalculateFOV(MapPosition.ToCoord(), 100);
+            CurrentMap.CalculateFOV(MapPosition.ToCoord(), 30);
             MapHelper.PlayerFOV = CurrentMap.FOV.CurrentFOV.ToList();
 
             foreach (var cell in CurrentMap.FOV.CurrentFOV)
             {
                 MapHelper.FogMap.SetCell(cell.X, cell.Y, -1);
             }
-
         }
 
         private void UpdateEnemyVisibility()

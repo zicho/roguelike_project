@@ -77,12 +77,25 @@ namespace Actors
                 isStatic: false,
                 isWalkable: false,
                 isTransparent: true);
+
+            MapHelper.EntityPositions.Add(pos);
+        }
+
+        private void UpdatePositions(object sender, ItemMovedEventArgs<IGameObject> e)
+        {
+            if(MapHelper.EntityPositions.Contains(e.OldPosition)) {
+                MapHelper.EntityPositions.Remove(e.OldPosition);
+                MapHelper.EntityPositions.Add(e.NewPosition);
+
+                GD.Print($"Entity {Name}'s old position {e.OldPosition} was replaced with {e.NewPosition}");
+            }
         }
 
         public override void _Ready()
         {
             AddToGroup("Actors");
             MapPosition = _backingField.Position.ToVector2(); // used to set the position on the graphical map, should always "mirror" the backing field position
+            Moved += UpdatePositions;
             // GameHelper.ShowMessage($"{Name} is spawned");
         }
 
@@ -90,7 +103,7 @@ namespace Actors
 
         public virtual void CalculateFOV() {
             if (CurrentMap == null || MapHelper.FogMap == null) return; // failsafe, should not occur
-            CurrentMap.CalculateFOV(MapPosition.ToCoord(), 3);
+            CurrentMap.CalculateFOV(MapPosition.ToCoord(), 30);
         }
 
         public bool MoveIn(Direction direction)

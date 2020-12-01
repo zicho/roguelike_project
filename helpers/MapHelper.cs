@@ -12,9 +12,7 @@ namespace Helpers {
         public static TileMap TileMap { get; set; }
         public static TileMap FogMap { get; set; }
         public static List<Vector2> EmptyTiles { get; set; } = new List<Vector2>();
-        public static List<Vector2> KnownTiles { get; set; } = new List<Vector2>();
-        public static List<Vector2> FogTiles { get; set; } = new List<Vector2>();
-        public static List<Vector2> EntityPositions { get; set; } = new List<Vector2>();
+        public static List<Coord> EntityPositions { get; set; } = new List<Coord>();
         public static Vector2 RandomEmpty => EmptyTiles[new Random().Next(EmptyTiles.Count)];
         public static List<Coord>  PlayerFOV { get; set; } = new List<Coord>();
         public static TileMap SightMap { get; set; }

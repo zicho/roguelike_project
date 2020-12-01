@@ -58,6 +58,9 @@ namespace Actors
                 }
             }
 
+            PathHelper.UpdateGoalMap();
+            GD.Print(PathHelper.FleeMap.ToString());
+
             CalculateFOV();
             UpdateEnemyVisibility();
 

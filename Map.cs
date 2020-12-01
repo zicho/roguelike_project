@@ -14,7 +14,8 @@ namespace MainGame
         public override void _Ready()
         {
 
-            var terrain = new ArrayMap<bool>(20, 20);
+            var terrain = new ArrayMap<bool>(120, 120);
+            var enemyCount = 40;
 
             MapHelper.TileMap = this;
             MapHelper.FogMap = GetParent().GetNode<TileMap>("FogMap");
@@ -53,7 +54,7 @@ namespace MainGame
 
             var enemyScene = GD.Load<PackedScene>("res://entities/Enemy.tscn");
 
-            foreach (var e in Enumerable.Range(0, 2))
+            foreach (var e in Enumerable.Range(0, enemyCount))
             {
                 var enemy = enemyScene.Instance() as Enemy;
                 map.AddEntity(enemy);
@@ -61,6 +62,8 @@ namespace MainGame
             }
 
             MapHelper.CurrentMap = map;
+
+            PathHelper.CreateGoalMap();
 
             GD.Print("Number of entities: " + MapHelper.CurrentMap.Entities.Count);
             GD.Print("Number of children: " + GetChildCount());
